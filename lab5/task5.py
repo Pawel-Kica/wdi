@@ -11,7 +11,6 @@ def mFibo(n: int) -> bool:
             return True
         elif result > n:
             return False
-    return False
 
 
 n: int = int(input())
