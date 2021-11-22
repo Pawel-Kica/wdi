@@ -1,5 +1,11 @@
-# num = int(input())
-num = 20
+try:
+    num = int(input())
+    if num < 0:
+        raise(ValueError)
+except ValueError:
+    print('value error')
+    exit(0)
+# num = 20
 counter = 0
 
 num_2 = 1
@@ -16,6 +22,5 @@ while num_2 <= num:
         # print('num3', num_3)
     num_2 *= 2
     # print('num2', num_2)
-
 
 print(counter)
