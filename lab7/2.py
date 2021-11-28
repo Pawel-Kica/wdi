@@ -1,6 +1,6 @@
 try:
     n = 30
-    # n = int(input('enter a natural number: '))
+    n = int(input('enter a natural number: '))
     if(n < 0):
         raise ValueError
 except ValueError:
@@ -22,4 +22,4 @@ if n > 1:
             primes.append(i)
 print(primes)
 for x in range(len(primes)-1, 0, -1):
-    print(primes[x], primes[x-1], 'mod: ', primes[x] % primes[x-1])
+    print(primes[x], primes[x-1], 'mod:', primes[x] % primes[x-1])
