@@ -3,7 +3,8 @@ import time
 from data import data
 from timeDecorator import timeit
 
-def sieve(n:int)->list[int]:
+
+def sieve(n: int) -> list[int]:
     primes = []
     if n > 1:
         t = [True] * (n + 1)
@@ -20,7 +21,8 @@ def sieve(n:int)->list[int]:
                 primes.append(i)
     return primes
 
-def primeFactors(n:int)->list[int]:
+
+def primeFactors(n: int) -> list[int]:
     t = []
     k = 2
     while n != 1:
@@ -31,53 +33,83 @@ def primeFactors(n:int)->list[int]:
         k += 1
     return t
 
-def checkRec(tab:list[int] ,length:int, n:int = 0)->bool:
-    if tab[n] + n > length:
-        return False
 
-    pf = primeFactors(tab[n])
-    if pf == []:
-        return False
+def checkRec(tab: list[int], length: int, n: int = 0):
 
-    for x in pf:
-        if x + n == length - 1:
-            return True
-        elif x + n < length - 1:
-            result = checkRec(tab, length, x + n )
-        else:
-            return False
-    return result
+    global result
+
+    # print(tab[n], n, result)
+
+    if not result:
+        pf = primeFactors(tab[n])
+        for x in pf:
+            if x + n == length - 1:
+                # print('prime factor', x, 'index', n,
+                #   'max index', length - 1, 'TRUEEEEEEEEE')
+                result = True
+                break
+            elif x + n < length - 1:
+                # print('prime factor', x, 'index', n,
+                #   'max index', length - 1, 'AGAAAIN')
+                checkRec(tab, length, x + n)
+            else:
+                break
+
 
 @timeit
-def checkIte(tab:list[int], n:int)->bool:
-    primes = sieve(n)
-    valid = [False for x in range(len(tab))]
-    return True
+def checkIte(tab: list[int], n: int) -> bool:
+    pf = primeFactors(0)
+    # for x in pf:
+    #     flag: bool = True
 
 # print('always')
 
+
 if __name__ == "__main__":
 
-    length = 10
-    rangeOfNumbers = 5
+    length = 30
+    rangeOfNumbers = 30
 
-    numbers = [random.randint(1,rangeOfNumbers) for x in range(0,length)]
+    # length = 503
+    # rangeOfNumbers = 100
+
+    numbers = [random.randint(1, rangeOfNumbers) for x in range(0, length)]
+
+    numbers = [15, 1, 1, 390, 1, 25, 1, 1, 1]
+
+    # numbers = [1, 2,  3, 4]
+
+    # numbers = [2, 1,  3]
+
+    prime = 503
+    numbers = [1 for x in range(prime)]
+    numbers.insert(0, prime)
+
+    # numbers = [2, 1, 4, 1, 5, 3, 1, 1, 3, 5]
+
+    numbers = [3, 2, 1, 4, 1, 4, 3, 7, 1, 3, 5]
+
+    length = len(numbers)
+
+    # numbers.insert(0, 503)
+    # length += 1
 
     # numbers = data
     # length = len(data)
 
-    print(numbers)
+    result = False
 
-    startTime:float = time.time()
+    startTime: float = time.time()
 
-    result:bool = checkRec(numbers,length)
+    checkRec(numbers, length)
 
-    endTime:float = time.time()
+    endTime: float = time.time()
 
-    print (f'Function: checkRec with args: {numbers,length} took: {endTime-startTime} sec')
+    print(
+        f'Function: checkRec with args: {numbers,length} took: {endTime-startTime} sec')
+    print(f'Result: {result}')
 
-    result2 = checkIte(numbers,rangeOfNumbers)
-
+    # result2 = checkIte(numbers, rangeOfNumbers)
 
 
 # 15 = 5 * 3
