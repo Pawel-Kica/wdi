@@ -31,7 +31,6 @@ def primeFactors(n:int)->list[int]:
         k += 1
     return t
 
-# @timeit
 def checkRec(tab:list[int] ,length:int, n:int = 0)->bool:
     if tab[n] + n > length:
         return False
@@ -52,7 +51,10 @@ def checkRec(tab:list[int] ,length:int, n:int = 0)->bool:
 @timeit
 def checkIte(tab:list[int], n:int)->bool:
     primes = sieve(n)
+    valid = [False for x in range(len(tab))]
     return True
+
+# print('always')
 
 if __name__ == "__main__":
 
@@ -75,3 +77,10 @@ if __name__ == "__main__":
     print (f'Function: checkRec with args: {numbers,length} took: {endTime-startTime} sec')
 
     result2 = checkIte(numbers,rangeOfNumbers)
+
+
+
+# 15 = 5 * 3
+# 28 = 2 * 2 * 7
+
+# numbers = [ 15, 1, 1, 5, 1, 25, 1, 1, 1 ]
