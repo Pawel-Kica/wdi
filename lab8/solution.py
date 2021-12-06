@@ -34,24 +34,17 @@ def primeFactors(n: int) -> list[int]:
     return t
 
 
-def checkRec(tab: list[int], length: int, n: int = 0):
-
+def checkRec(tab: list[int], n: int = 0):
     global result
-
-    # print(tab[n], n, result)
-
+    global length
     if not result:
         pf = primeFactors(tab[n])
         for x in pf:
             if x + n == length - 1:
-                # print('prime factor', x, 'index', n,
-                #   'max index', length - 1, 'TRUEEEEEEEEE')
                 result = True
                 break
             elif x + n < length - 1:
-                # print('prime factor', x, 'index', n,
-                #   'max index', length - 1, 'AGAAAIN')
-                checkRec(tab, length, x + n)
+                checkRec(tab, x + n)
             else:
                 break
 
@@ -75,8 +68,6 @@ if __name__ == "__main__":
 
     numbers = [random.randint(1, rangeOfNumbers) for x in range(0, length)]
 
-    numbers = [15, 1, 1, 390, 1, 25, 1, 1, 1]
-
     # numbers = [1, 2,  3, 4]
 
     # numbers = [2, 1,  3]
@@ -89,6 +80,7 @@ if __name__ == "__main__":
 
     numbers = [3, 2, 1, 4, 1, 4, 3, 7, 1, 3, 5]
 
+    numbers = [15, 1, 1, 390, 1, 25, 1, 1, 1]
     length = len(numbers)
 
     # numbers.insert(0, 503)
@@ -101,7 +93,7 @@ if __name__ == "__main__":
 
     startTime: float = time.time()
 
-    checkRec(numbers, length)
+    checkRec(numbers)
 
     endTime: float = time.time()
 
