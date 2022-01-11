@@ -1,6 +1,6 @@
 '''
  Napisz program, który pozwala na rekurencyjne obliczanie dowolnej potęgi (N) wprowadzonej przez użytkownika liczby (M). Wykorzystując funkcję ​time.sleep() zatrzymaj wykonywanie programu na 
- M sekund, jeśli liczba Njest liczbą pierwszą – sprawdź wykorzystują rekurencję.
+ M sekund, jeśli liczba N jest liczbą pierwszą – sprawdź wykorzystują rekurencję.
 '''
 import time
 
@@ -8,10 +8,10 @@ def isPrime(number,divisor=2):
     if number <= 2:
         return number==2;
     if number % divisor == 0:
-        return False;
+        return False
     if divisor * divisor > number:
-        return True;
-    return isPrime(number, divisor + 1);
+        return True
+    return isPrime(number, divisor + 1)
 
 def recursivePower(number,power):
     if power==0:
