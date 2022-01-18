@@ -1,4 +1,5 @@
 import random
+import re
 import time
 from data import data
 from timeDecorator import timeit
@@ -35,19 +36,25 @@ def primeFactors(n: int) -> list[int]:
 
 
 def checkRec(tab: list[int], n: int = 0):
-    global result
-    global length
+    result = False
     if not result:
         pf = primeFactors(tab[n])
         for x in pf:
-            if x + n == length - 1:
+            if x + n ==  len(tab) - 1:
                 result = True
-                break
-            elif x + n < length - 1:
+                return result
+            elif x + n <  len(tab) - 1:
                 checkRec(tab, x + n)
             else:
-                break
+                return result
+    return result
 
+def checkRec1(tab:list[int],n:int=0):
+    result = False
+    length = len(tab)
+    checkRec1(tab,n)
+
+    return result
 
 @timeit
 def checkIte(tab: list[int], n: int) -> bool:
