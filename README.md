@@ -1,3 +1,3 @@
 ﻿## WDI
 
-Algorithmic tasks from classes at my university. Solved in python.
+Algorithmic tasks from classes at my university. Solved in python or C.
