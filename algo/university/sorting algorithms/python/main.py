@@ -19,10 +19,10 @@ if __name__=='__main__':
 
     arr = [round(uniform(lowerRange,upperRange),1) for _ in range(size)]
 
-    arr = beforeAfterComparison(bubbleSort,arr)
+    beforeAfterComparison(bubbleSort,arr)
 
-    arr = beforeAfterComparison(insertionSort,arr)
+    beforeAfterComparison(insertionSort,arr)
 
-    arr = beforeAfterComparison(selectionSort,arr)
+    beforeAfterComparison(selectionSort,arr)
     
     print()
