@@ -51,18 +51,9 @@ def checkRec(tab: list[int], n: int = 0):
 
 def checkRec1(tab:list[int],n:int=0):
     result = False
-    length = len(tab)
     checkRec1(tab,n)
 
     return result
-
-@timeit
-def checkIte(tab: list[int], n: int) -> bool:
-    pf = primeFactors(0)
-    # for x in pf:
-    #     flag: bool = True
-
-# print('always')
 
 
 if __name__ == "__main__":

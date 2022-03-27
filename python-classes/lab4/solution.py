@@ -1,6 +1,6 @@
 try:
     n = 30
-    n = int(input('enter a natural number: '))
+    n = int(input('natural number: '))
     if(n < 0):
         raise ValueError
 except ValueError:

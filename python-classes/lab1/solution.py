@@ -40,5 +40,3 @@ print(commonArr)
 print(string1obj)
 print(string2obj)
 
-# for x in string2obj:
-#     if
