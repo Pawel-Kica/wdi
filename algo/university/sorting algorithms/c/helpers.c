@@ -16,7 +16,6 @@ void swap(float *xp, float *yp)
 
 void copyArray(float arr[], float copy[], int length)
 {
-    // loop to iterate through array
     for (int i = 0; i < length; ++i)
     {
         copy[i] = arr[i];
@@ -34,10 +33,11 @@ void decorator(void (*f)(), float arr[], int length)
     float secondCopy[length];
 
     copyArray(arr, copy, length);
-    copyArray(arr, secondCopy, length);
 
+    // copyArray(arr, secondCopy, length);
     // qsort(secondCopy, length, sizeof(float), compare);
 
+    printf("Before: ");
     printArray(copy, length);
     f(copy, length);
     printf("After: ");

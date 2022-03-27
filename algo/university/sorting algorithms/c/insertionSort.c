@@ -1,13 +1,11 @@
 void insertionSort(float arr[], int length)
 {
-    // int length = sizeof(arr) / sizeof(arr[0]);
-
     for (int i = 1; i < length; i++)
     {
         float key = arr[i];
         int j = i - 1;
 
-        while (j >= 0 & key < arr[j])
+        while (j >= 0 && key < arr[j])
         {
             arr[j + 1] = arr[j];
             j -= 1;

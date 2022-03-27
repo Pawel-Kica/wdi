@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "helpers.c"
+#include "mergeSort.c"
 #include "bubbleSort.c"
 #include "selectionSort.c"
 #include "insertionSort.c"
@@ -29,11 +30,14 @@ int main()
     printf("Sorting with bubbleSort \n");
     decorator(bubbleSort, arr, length);
 
-    printf("Sorting with selectionSort\n");
-    decorator(selectionSort, arr, length);
+    // printf("Sorting with selectionSort\n");
+    // decorator(selectionSort, arr, length);
 
-    printf("Sorting with insertionSort\n");
-    decorator(insertionSort, arr, length);
+    // printf("Sorting with insertionSort\n");
+    // decorator(insertionSort, arr, length);
+
+    // printf("Sorting with mergeSort\n");
+    // decorator(mergeSort, arr, length);
 
     return 0;
 }

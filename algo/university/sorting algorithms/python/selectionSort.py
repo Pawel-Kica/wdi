@@ -4,13 +4,13 @@ def selectionSort(arr:list[float]):
     length = len(arr)
 
     for i in range(length-1):
-        idx_of_min = i
+        min_idx = i
 
         for j in range(i+1,length):
-            if(arr[idx_of_min] > arr[j]):
-                idx_of_min = j
+            if(arr[min_idx] > arr[j]):
+                min_idx = j
 
-        swap(arr,i,idx_of_min)
+        swap(arr,i,min_idx)
 
         
             

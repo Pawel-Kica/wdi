@@ -1,7 +1,5 @@
 void bubbleSort(float arr[], int length)
 {
-    // int length = sizeof(arr) / sizeof(arr[0]);
-
     for (int i = 0; i < length - 1; i++)
     {
         bool isSorted = true;
