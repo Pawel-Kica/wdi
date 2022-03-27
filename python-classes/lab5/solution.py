@@ -1,5 +1,4 @@
 import random
-import re
 import time
 from data import data
 from timeDecorator import timeit

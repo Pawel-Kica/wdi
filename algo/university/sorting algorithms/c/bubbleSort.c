@@ -52,7 +52,9 @@ int main()
 
     printf("Before: ");
     printArray(arr, length);
+
     bubbleSort(arr, length);
+
     printf("After: ");
     printArray(arr, length);
     return 0;
