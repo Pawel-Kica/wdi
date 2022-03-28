@@ -30,16 +30,18 @@ int compare(const void *a, const void *b)
 void decorator(void (*f)(), float arr[], int length)
 {
     float copy[length];
-    float secondCopy[length];
 
-    copyArray(arr, copy, length);
-
+    // float secondCopy[length];
     // copyArray(arr, secondCopy, length);
     // qsort(secondCopy, length, sizeof(float), compare);
 
+    copyArray(arr, copy, length);
+
     printf("Before: ");
     printArray(copy, length);
+
     f(copy, length);
+
     printf("After: ");
     printArray(copy, length);
     printf("\n");

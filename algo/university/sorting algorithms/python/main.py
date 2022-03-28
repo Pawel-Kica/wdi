@@ -1,5 +1,6 @@
 from random import uniform
 from mergeSort import mergeSort
+from quickSort import quickSort
 from bubbleSort import bubbleSort
 from insertionSort import insertionSort
 from selectionSort import selectionSort
@@ -27,5 +28,7 @@ if __name__=='__main__':
     beforeAfterComparison(selectionSort,arr)
     
     beforeAfterComparison(mergeSort,arr)
+
+    beforeAfterComparison(quickSort,arr,0,len(arr)-1)
 
     print()
