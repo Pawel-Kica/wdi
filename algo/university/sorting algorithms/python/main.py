@@ -5,6 +5,7 @@ from heapSort import heapSort
 from bubbleSort import bubbleSort
 from insertionSort import insertionSort
 from selectionSort import selectionSort
+from quickSortByPython import quickSortByPython
 from helpers.printDecorator import beforeAfterComparison
 
 if __name__=='__main__':
@@ -31,6 +32,8 @@ if __name__=='__main__':
     beforeAfterComparison(mergeSort,arr)
 
     beforeAfterComparison(quickSort,arr,0,len(arr)-1)
+    
+    beforeAfterComparison(quickSortByPython,arr)
 
     beforeAfterComparison(heapSort,arr)
 
