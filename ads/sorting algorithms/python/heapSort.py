@@ -14,10 +14,7 @@ def heapArr(arr, n, i):
  
     if largest != i:
         swap(arr,i,largest)
-        
         heapArr(arr, n, largest)
-
-
 
 def heapSort(arr):
     length = len(arr)

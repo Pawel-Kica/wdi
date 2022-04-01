@@ -1,3 +1,15 @@
-﻿## WDI
+﻿### 🏨 A repository for programming classes at my university
 
-Algorithmic tasks from classes at my university. Solved in python or C.
+---
+
+First semester:
+
+- [Basics of Python language](https://github.com/DevKica/wdi/tree/main/python)
+
+Second semester:
+
+- [Algorithms and data structures](https://github.com/DevKica/wdi/tree/main/ads)
+
+- [Security of networks and ICT systems](https://github.com/DevKica/wdi/tree/main/ads)
+
+- [Basics of the C language](https://github.com/DevKica/wdi/tree/main/c)
