@@ -4,12 +4,12 @@
 
 First semester:
 
-- [Basics of Python language](https://github.com/DevKica/wdi/tree/main/python)
+- 🐍 [Basics of Python language](https://github.com/DevKica/wdi/tree/main/python)
 
 Second semester:
 
-- [Algorithms and data structures](https://github.com/DevKica/wdi/tree/main/ads)
+- 📊 [Algorithms and data structures](https://github.com/DevKica/wdi/tree/main/ads)
 
-- [Security of networks and ICT systems](https://github.com/DevKica/wdi/tree/main/ads)
+- 🕸️ [Security of networks and ICT systems](https://github.com/DevKica/wdi/tree/main/snis)
 
-- [Basics of the C language](https://github.com/DevKica/wdi/tree/main/c)
+- 🕹️ [Basics of the C language](https://github.com/DevKica/wdi/tree/main/c)
