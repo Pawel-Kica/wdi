@@ -20,9 +20,6 @@ void encryptCaeser(char *msg)
         }
     }
 
-    // printf("max %d\n", length);
-    // printf("shift %d\n", shift);
-
     for (i = 0; i < length; i++)
     {
         if (msg[i] != ' ')
