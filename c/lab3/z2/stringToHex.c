@@ -10,8 +10,6 @@ char* stringToHex(char *input)
 
     for (int i = 0; i < strlen(input); i++)
     {
-        printf("%d \n", input[i]);
-
         output[j] = charToHex(input[i]/16);
         output[j+1] = charToHex(input[i]%16);
         j += 2;
