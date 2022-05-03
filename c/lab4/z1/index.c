@@ -43,14 +43,14 @@ void listBinaryFile(int size, int type, char *file_name){
 	fclose(ptf);
     printf("Successfully listed\n");
 }
-int get(FILE *ptf, int idx, int size) {
+int get_value(FILE *ptf, int idx, int size) {
 	int content;
 	fseek(ptf, size * idx,0);
 	fread(&content, size, 1, ptf);
 	return content;
 }
 
-void set(FILE *ptf, int idx, int size, int content) {
+void set_value(FILE *ptf, int idx, int size, int content) {
 	fseek(ptf, size * idx,0);
 	fwrite(&content, size, 1, ptf);
 }
@@ -64,12 +64,12 @@ void sortBinaryFile(int length, int type, char *file_name) {
 	{   
          for (int j = 0; j < length - i - 1; j++)
          {
-            int el1 = get(ptf,j,v_size);
-            int el2 = get(ptf,j+1,v_size);
+            int el1 = get_value(ptf,j,v_size);
+            int el2 = get_value(ptf,j+1,v_size);
             if (el1 > el2){
                 int tmp = el1;
-                set(ptf, j, v_size, el2);
-                set(ptf, j+1, v_size, tmp);
+                set_value(ptf, j, v_size, el2);
+                set_value(ptf, j+1, v_size, tmp);
             }
         }
     }
@@ -77,14 +77,15 @@ void sortBinaryFile(int length, int type, char *file_name) {
     printf("Successfully sorted\n");
 }
 
-int main(int argc, char **argv){
+int main(int arg_count, char **arg_values){
 	srand(time(NULL));
-	if (argc != 5) {
+	// file, size, int && char (i,c), generate && list && sort && all (g,l,s,a)
+	if (arg_count != 5) {
 		printf("Invalid data type\n");
 		return 1;
 	} 
 	int type;
-	switch (argv[3][0]) {
+	switch (arg_values[3][0]) {
 		case 'i':
 			type = 0;
 			break;
@@ -95,23 +96,23 @@ int main(int argc, char **argv){
 			printf("Invalid data type\n");
 			return 1;
 	}
-	int size = atoi(argv[2]);
-	switch (argv[4][0]) {
+	int size = atoi(arg_values[2]);
+	switch (arg_values[4][0]) {
 		case 'g':
-			generateBinaryFile(size, type, argv[1]);
+			generateBinaryFile(size, type, arg_values[1]);
 			break;
 		case 'l':
-			listBinaryFile(size, type, argv[1]);
+			listBinaryFile(size, type, arg_values[1]);
 			break;
 		case 's':
-			sortBinaryFile(size, type, argv[1]);
+			sortBinaryFile(size, type, arg_values[1]);
 			break;
         case 'a':
-			generateBinaryFile(size, type, argv[1]);
-			listBinaryFile(size, type, argv[1]);
+			generateBinaryFile(size, type, arg_values[1]);
+			listBinaryFile(size, type, arg_values[1]);
             printf("\n");
-			sortBinaryFile(size, type, argv[1]);
-			listBinaryFile(size, type, argv[1]);
+			sortBinaryFile(size, type, arg_values[1]);
+			listBinaryFile(size, type, arg_values[1]);
             break;
 		default:
 			printf("Invalid operation\n");
