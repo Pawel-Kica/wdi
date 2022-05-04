@@ -3,29 +3,34 @@
 #include <string.h>
 #include <time.h>
 
-int get_value(FILE *f, int idx) {
-	fseek(f, 0, SEEK_SET);
+int get_value(FILE *pft, int idx) {
+	fseek(pft, 0, SEEK_SET);
 	int content;
 	for (int i = 0; i <= idx; i++)
-		fscanf(f, "%i", &content);
+		fscanf(pft, "%i", &content);
 	return content;
 }
 
 int main(int arg_count, char **arg_values){
-	srand(time(NULL));
-    // A row count, A column count, B column count, A file, B file, C(excepted result) file
 
-   if (arg_count != 7) {
+	srand(time(NULL));
+	// A file, B file, C(result) file
+	if (arg_count != 4) {
 		printf("Invalid data type\n");
 		return 1;
 	}
-   
-	int rows_A = atoi(arg_values[1]);
-	int columns_A = atoi(arg_values[2]);
-	int columns_B = atoi(arg_values[3]);
-	FILE *ptf_A = fopen(arg_values[4], "r");
-	FILE *ptf_B = fopen(arg_values[5], "r");
-	FILE *ptf_C = fopen(arg_values[6], "r");
+	
+	FILE *ptf_A = fopen(arg_values[2], "r");
+	FILE *ptf_B = fopen(arg_values[3], "r");
+	FILE *ptf_C = fopen(arg_values[4], "w");
+		
+	int rows_A;
+	int columns_A;
+	int columns_B;
+
+	rows_A = get_rows_number(ptf_A);
+	columns_A = get_columns_number(ptf_A);
+	columns_B = get_columns_number(ptf_B);
 	
 	for (int i = 0; i < rows_A; i++) {
         for (int j = 0; j < columns_B; j++) {

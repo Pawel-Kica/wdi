@@ -45,13 +45,13 @@ void listBinaryFile(int size, int type, char *file_name){
 }
 int get_value(FILE *ptf, int idx, int size) {
 	int content;
-	fseek(ptf, size * idx,0);
+	fseek(ptf, size * idx, SEEK_SET);
 	fread(&content, size, 1, ptf);
 	return content;
 }
 
 void set_value(FILE *ptf, int idx, int size, int content) {
-	fseek(ptf, size * idx,0);
+	fseek(ptf, size * idx, SEEK_SET);
 	fwrite(&content, size, 1, ptf);
 }
 
