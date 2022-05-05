@@ -1,1 +1,1 @@
-macierzAtxt macierzB.txt macierzC.txt
+macierzA.txt macierzB.txt macierzC.txt
