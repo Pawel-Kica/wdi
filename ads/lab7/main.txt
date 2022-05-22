@@ -1,0 +1,99 @@
+z1.
+preorder - F B A H D K (root,left,right)
+function preorder(root){
+    if(root){
+        console.log(root)
+        preorder(root.left)
+        preorder(root.right)
+    }
+}
+
+inorder - A B D F H K (left,root,right)
+function inorder(root){
+    if(root){
+        inorder(root.left)
+        console.log(root)
+        inorder(root.right)
+    }
+}
+
+postorder - A D B K H F (left,right,root)
+function postorder(root){
+    if(root){
+        postorder(root.left)
+        postorder(root.right)
+        console.log(root)
+}
+
+z2.
+pkica
+
+
+z3.
+function find_val(root, val) {
+  if (val < root.val && root.left) return find_val(root.left)
+  else if (val > root.val && root.right) return find_val(root.right)
+  else if (val == root.val) return root
+  return null
+}
+
+function minValue(root){
+    let tmp = root
+    while(tmp.left!==null) tmp=tmp.left
+    return tmp.val
+}
+
+function maxValue(root) {
+    let tmp = root
+    while (tmp.right != null) tmp = tmp.right  
+    return (tmp.val)
+}
+
+O(h) gdzie h to wysokosc drzewa czyli łącznie O(logn), gdzie n to ilosc elementow w drzewie
+
+z4.
+15 -> 17
+6 -> 9
+4 -> 6
+4 <- 6
+
+function treeSuccesor(root){
+	if(root.right) return minValue(root.right)
+
+	while(root.up){
+		tmp = root
+		root = root.up
+		if(root.left==tmp) return root.val
+	}
+	return null
+}
+
+z5.
+
+z6.
+function treeInsert(Tree,node){
+root = Tree.root
+x = root
+y = null
+while(x){
+	if(node.val<x.val){
+		y=x
+		x=x.left
+	}else if(node.val>x.val){
+		y=x
+		x=x.right
+	}
+}
+if(node.val<y.val){
+y.left=node
+}else{
+y.right = node
+}
+}
+
+z7.
+pkica
+
+z8.
+pesymistyczny: zlozonosc O(n^2), bo TREE-INSERT - O(n) w pesymistycznym
+optymistyczny: zlozonosc: O(nlogn), bo TREE-INSERT - O(logn) w optymistycznym
