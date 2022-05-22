@@ -1,4 +1,4 @@
-enum Day {MON = 0, TUE, WED, THU, FRI, SAT, SUN, numberOfDays=7};
+enum Day {MON = 0, TUE, WED, THU, FRI, SAT, SUN, numberOfDays};
 enum Action {DAY_EARLIER = 0, DAY_LATER, TIME_EARLIER, TIME_LATER = 3};
 
 const char days[numberOfDays][20] = {"poniedziałek", "wtorek", "środa", "czwartek", "piątek", "sobota", "niedziela"};
