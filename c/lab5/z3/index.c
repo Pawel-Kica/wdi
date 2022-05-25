@@ -6,11 +6,11 @@
 
 
 int main(int argc, char**argv){
-    Lesson *lesson_obj = create_lesson(12,50,90,WED,"Podstawy programowania");
-    printf("Przed uwzglednieniem przesunięciem:\n");
-    printf("\t\"%s\"",Lesson__toString(lesson_obj));
+    Lesson *lesson_obj = create_lesson(12,20,90,THU,"Podstawy programowania");
+    printf("Przed uwzglednieniem przesunięciem:");
+    printf("\n\t%s\n",Lesson__toString(lesson_obj));
    
-    Action *action_types = parse(argc - 1, argv + 1);
+    Action *action_types = parse(argc - 1, argv+1);
 
     for(int i = 0; i < argc - 1; ++i){
         switch(action_types[i]){
@@ -32,5 +32,6 @@ int main(int argc, char**argv){
                 break;
         }
     }
-    printf("Po uzwlednieciu przesunięc: %s\n", Lesson__toString(lesson_obj));
+    printf("Po uzwlednieciu przesunięc:");
+    printf("\n\t%s\n",Lesson__toString(lesson_obj));
 }

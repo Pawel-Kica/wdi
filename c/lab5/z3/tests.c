@@ -23,8 +23,6 @@ void run_units(){
     CU_ASSERT_EQUAL(lesson1->term->day,MON);
     CU_ASSERT_STRING_EQUAL(lesson1->name,val_name);
 
-    CU_ASSERT_STRING_EQUAL(Term__toString(lesson1->term),dayToString(lesson1->term->day));
-
     Lesson *lesson2 = create_lesson(14,20,90,SAT,"Algorytmy 1");
     CU_ASSERT_EQUAL(lesson2->term->hour,14);
     CU_ASSERT_EQUAL(lesson2->term->minute,20);
@@ -37,10 +35,13 @@ void run_units(){
     CU_ASSERT_TRUE(canBeMoved(lesson1));
     CU_ASSERT_TRUE(!canBeMoved(lesson2));
     CU_ASSERT_TRUE(canBeMoved(lesson3));
+
+    //lessonToStr
+    CU_ASSERT_STRING_EQUAL(Lesson__toString(lesson3),"Algorytmy 2, piątek 16:50 [10]");
 }
 
 int main()
-{
+{ 
     CU_pSuite pSuite = NULL;
 
     if (CUE_SUCCESS != CU_initialize_registry())

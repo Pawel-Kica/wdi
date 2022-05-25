@@ -7,6 +7,7 @@
 
 typedef enum days_types {MON=0, TUE, WED, THU, FRI, SAT, SUN, numberOfDays} Day;
 typedef enum action_types {DAY_EARLIER = 0, DAY_LATER, TIME_EARLIER, TIME_LATER} Action;
+
 struct Term{
     int hour;
     int minute;
@@ -28,12 +29,12 @@ Day getEnumNextDay(Day day){
 Day getEnumPrevDay(Day day){
     return day == MON ? SUN : day-1;
 }
-Action* parse(int arr_size, char *arr[]){
-    Action *action_types = malloc(arr_size*sizeof(*arr));
+Action* parse(int arr_size, char *array[]){
+    Action *action_types = malloc(arr_size*sizeof(*array));
     int counter = 0;
 
     for(int i = 0; i < arr_size; i++){
-        char* value = arr[i];
+        char *value = array[i];
         if(!strcmp(value,"d-"))
             action_types[counter++] = DAY_EARLIER;
         else if(!strcmp(value,"d+"))
@@ -44,7 +45,7 @@ Action* parse(int arr_size, char *arr[]){
             action_types[counter++] = TIME_LATER;
     }
     if(arr_size != counter)
-        action_types = realloc(action_types, counter*sizeof(*arr));
+        action_types = realloc(action_types, counter*sizeof(*array));
     return action_types;
 }
 
@@ -61,30 +62,32 @@ struct Term* Term__create(int hour,int minute, int duration,Day day){
     return term_obj;
 }
 char *Term__toString(struct Term *term_obj){
-    char *result = malloc(strlen((dayToString(term_obj->day))+1)*sizeof(*result));
-
+    char *result = malloc((strlen(dayToString(term_obj->day))+20) * sizeof(*result));
     strcpy(result,dayToString(term_obj->day));
     char counter = strlen(result);
-
-    printf("\n RESULT: %s \n",result);
-    // int hour = term_obj->hour;
-    // int minute = term_obj->minute;
-    // int duration = term_obj->duration;
-
-    // if(hour < 10){
-    //     result[counter++] = '0';
-    //     result[counter++] = hour;
-    // }
-    // else{
-    //     result[counter++] = hour/10;
-    //     result[counter++] = hour%10;
-    // }
-    // printf("%i value \n",result[0]);
-    // printf("%i value \n",result[1]);
-    // printf("%s val\n",result);
-
+    int hour = term_obj->hour;
+    int minute = term_obj->minute;
+    int duration = term_obj->duration;
+    result[counter++]=' ';
+    if(hour>9){
+        result[counter++] = '0'+term_obj->hour/10;
+        result[counter++] = '0'+term_obj->hour%10;
+    }
+    else{
+        result[counter++] = '0';
+        result[counter++] = '0'+hour;
+    }
+    result[counter++]=':';
+    result[counter++]='0'+minute/10;
+    result[counter++]='0'+minute%10;
+    result[counter++]=' ';
+    result[counter++]='[';
+    result[counter++]='0'+duration/10;
+    result[counter++]='0'+duration%10;
+    result[counter++]=']';
     return result;
 }
+    
 // LESSONS
 void Lesson__init(Lesson *lesson_obj, int hour, int minute, int duration,Day day,char *name){
     lesson_obj->name = malloc(strlen(name) * sizeof(*name));
@@ -103,7 +106,6 @@ bool canBeMoved(Lesson* lesson_obj){
 
     int lesson_duration = lesson_obj->term->duration;
     int lesson_minutes = lesson_obj->term->minute;
-
     int endOfLesson_hour = lesson_obj->term->hour + (lesson_duration+lesson_minutes)/60;
     int endOfLesson_minutes = (lesson_minutes + lesson_duration)%60;
 
@@ -118,46 +120,73 @@ bool canBeMoved(Lesson* lesson_obj){
     if(day!=globalmaxDay) return false;
     if(endOfLesson_hour<globalminHour_end) return false;
     if(endOfLesson_hour>globalmaxHour_end) return false;
-    if(endOfLesson_hour==globalmaxHour_end && endOfLesson_minutes>0)return false;
+    if(endOfLesson_hour==globalmaxHour_end && endOfLesson_minutes>0){
+     return false;
+    }
+        
     return true;
 }
 void Lesson__earlierDay(Lesson* lesson_obj){
     lesson_obj->term->day = getEnumPrevDay(lesson_obj->term->day);
-    if(!canBeMoved){
+    if(!canBeMoved(lesson_obj)){
         printf("Zajęcia \"%s\" nie mogą być przesunięte na termin \"%s\"\n",lesson_obj->name,Term__toString(lesson_obj->term));
         lesson_obj->term->day = getEnumNextDay(lesson_obj->term->day);   
     }
 }
 void Lesson__laterDay(Lesson* lesson_obj){
     lesson_obj->term->day = getEnumNextDay(lesson_obj->term->day);
-    if(!canBeMoved){
+    if(!canBeMoved(lesson_obj)){
         printf("Zajęcia \"%s\" nie mogą być przesunięte na termin \"%s\"\n",lesson_obj->name,Term__toString(lesson_obj->term));
         lesson_obj->term->day = getEnumPrevDay(lesson_obj->term->day);   
     }
 }
 void Lesson__earlierTime(Lesson* lesson_obj){
-    int hour_start = lesson_obj->term->duration/60;
-    int minute_start = lesson_obj->term->duration%60;
-    lesson_obj->term->hour = lesson_obj->term->hour - hour_start;
-    lesson_obj->term->minute = lesson_obj->term->minute - minute_start;
+    int hour = lesson_obj->term->hour;
+    int minute = lesson_obj->term->minute;
+    int duration = lesson_obj->term->duration;
 
-    if(!canBeMoved){
+    int hour_start = (lesson_obj->term->duration)/60;
+    int minute_start = (lesson_obj->term->duration)%60;
+
+    if(minute-minute_start<0){
+        lesson_obj->term->hour = hour - hour_start -1;
+        lesson_obj->term->minute = minute + minute_start;
+    }else{
+        lesson_obj->term->hour = hour - hour_start ;
+        lesson_obj->term->minute = minute - minute_start;
+    }
+    if(!canBeMoved(lesson_obj)){
         printf("Zajęcia \"%s\" nie mogą być przesunięte na termin \"%s\"\n",lesson_obj->name,Term__toString(lesson_obj->term));
         lesson_obj->term->hour = lesson_obj->term->hour + hour_start;
         lesson_obj->term->minute = lesson_obj->term->minute + minute_start;
     }
 }
 void Lesson__laterTime(Lesson* lesson_obj){
-    int hour_start = lesson_obj->term->duration/60;
-    int minute_start = lesson_obj->term->duration%60;
-    lesson_obj->term->hour = lesson_obj->term->hour + hour_start;
-    lesson_obj->term->minute = lesson_obj->term->minute + minute_start;
-    if(!canBeMoved){
+    int hour = lesson_obj->term->hour;
+    int minute = lesson_obj->term->minute;
+    int duration = lesson_obj->term->duration;
+
+    int hour_start = (lesson_obj->term->duration)/60;
+    int minute_start = (lesson_obj->term->duration)%60;
+
+    if(minute+minute_start<60){
+        lesson_obj->term->hour = hour + hour_start;
+        lesson_obj->term->minute = minute + minute_start;
+    }else{
+        lesson_obj->term->hour = hour + hour_start +1;
+        lesson_obj->term->minute = abs(minute - minute_start);
+    }
+
+    if(!canBeMoved(lesson_obj)){
         printf("Zajęcia \"%s\" nie mogą być przesunięte na termin \"%s\"\n",lesson_obj->name,Term__toString(lesson_obj->term));
-        lesson_obj->term->hour = lesson_obj->term->hour - hour_start;
-        lesson_obj->term->minute = lesson_obj->term->minute - minute_start;
+        lesson_obj->term->hour = hour;
+        lesson_obj->term->minute = minute;
     }
 }
 char* Lesson__toString(Lesson* lesson_obj){
-
+    char *result= malloc(40 * sizeof(*result));
+    strcpy(result,lesson_obj->name);
+    strcat(result,", ");
+    strcat(result, Term__toString(lesson_obj->term));
+    return result;
 }

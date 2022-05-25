@@ -39,11 +39,9 @@ void run_units(){
     CU_ASSERT_EQUAL(test_obj_3_Term__create->minute,NULL);
     // CU_ASSERT_EQUAL(test_obj_3_Term__create->duration,NULL);
 
-
     // Term__toString
     struct Term *test_obj_1_Term__toString = Term__create(12,15,40);
-    CU_ASSERT_STRING_EQUAL(Term__toString(test_obj_1_Term__toString),"12");
-    
+    CU_ASSERT_STRING_EQUAL(Term__toString(test_obj_1_Term__toString),"12:15 [40]");
     // Term_earlierThan
     struct Term *test_obj_1_Term__earlierThan = Term__create(12,15,40);
     struct Term *test_obj_2_Term__earlierThan = Term__create(12,20,40);

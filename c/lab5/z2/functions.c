@@ -19,24 +19,26 @@ void Term__destroy(struct Term *term_obj){
 }
 char *Term__toString(struct Term *term_obj){
     char *result = malloc(20*sizeof(*result));
-
     int counter = 0;
     int hour = term_obj->hour;
     int minute = term_obj->minute;
     int duration = term_obj->duration;
-
-    if(hour < 10){
-        result[counter++] = '0';
-        result[counter++] = hour;
+    if(hour>9){
+        result[counter++] = '0'+term_obj->hour/10;
+        result[counter++] = '0'+term_obj->hour%10;
     }
     else{
-        result[counter++] = hour/10;
-        result[counter++] = hour%10;
+        result[counter++] = '0';
+        result[counter++] = '0'+hour;
     }
-    // printf("%i value \n",result[0]);
-    // printf("%i value \n",result[1]);
-    // printf("%s val\n",result);
-
+    result[counter++]=':';
+    result[counter++]='0'+minute/10;
+    result[counter++]='0'+minute%10;
+    result[counter++]=' ';
+    result[counter++]='[';
+    result[counter++]='0'+duration/10;
+    result[counter++]='0'+duration%10;
+    result[counter++]=']';
     return result;
 }
 
