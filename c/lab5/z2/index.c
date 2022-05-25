@@ -42,7 +42,7 @@ void run_units(){
 
     // Term__toString
     struct Term *test_obj_1_Term__toString = Term__create(12,15,40);
-    CU_ASSERT_EQUAL(Term__toString(test_obj_1_Term__toString),"12");
+    CU_ASSERT_STRING_EQUAL(Term__toString(test_obj_1_Term__toString),"12");
     
     // Term_earlierThan
     struct Term *test_obj_1_Term__earlierThan = Term__create(12,15,40);
