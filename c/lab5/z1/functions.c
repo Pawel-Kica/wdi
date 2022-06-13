@@ -8,7 +8,7 @@ const char* dayToString(enum Day day){
 }
 
 enum Action* parse(int arr_size, char *arr[]){
-    enum Action *action_types = malloc(arr_size*sizeof(*arr));
+    enum Action *action_types = malloc(arr_size*sizeof(enum Action));
     int counter = 0;
 
     for(int i = 0; i < arr_size; i++){
@@ -21,9 +21,11 @@ enum Action* parse(int arr_size, char *arr[]){
             action_types[counter++] = TIME_EARLIER;
         else if(!strcmp(value,"t+"))
             action_types[counter++] = TIME_LATER;
+        else
+            action_types[counter++]=5;
     }
-    if(arr_size != counter)
-        action_types = realloc(action_types, counter*sizeof(*arr));
+    // if(arr_size != counter)
+        // action_types = realloc(action_types, counter*sizeof(enum Action)));
 
     return action_types;
 }
