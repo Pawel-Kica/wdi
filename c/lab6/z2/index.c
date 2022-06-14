@@ -1,183 +1,147 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
 
-/**
- * Program, który pokazuje jak utworzyć trzyelementową listę jednokierunkową
- *
- * @author Stanisław Polak
- * @version 1.0 22-05-2020
-*/
+typedef enum{
+    MON,
+    TUE,
+    WED,
+    THU,
+    FRI,
+    SAT,
+    SUN,
+    numberOfDays
+}Day;
+const char days[numberOfDays][20] = {"poniedziałek", "wtorek", "środa", "czwartek", "piątek", "sobota", "niedziela"};
+
+typedef struct{
+    char *className;
+    Day day;
+    int hour;
+    int minute;
+    int duration;
+}Lesson;
+typedef struct Node{
+    Lesson lesson;
+    struct Node *next;
+}Node;
+
+void List_insert(Node **list, Lesson lesson, bool begin){
+    if(list==NULL){
+        fprintf(stderr,"List_insert - lista nie istnieje \n");
+    }else{
+        Node *wezel = malloc(sizeof(Node));
+        wezel->lesson=lesson;
+
+        if(begin){
+            wezel->next = *list;
+            *list=wezel;
+        }else{
+            wezel->next=NULL;
+            Node *iterator = *list;
+            while(iterator->next) iterator=iterator->next;
+            iterator->next=wezel;
+        }
+    }
+}
+
+void List_print(Node **list) {
+    if (list == NULL) {
+        fprintf(stderr, "List_print - lista nie istnieje\n");
+    }else{
+        Node *iterator = *list;
+        while(iterator) {
+            printf("Przedmiot: \e[31m%s\e[0m\nDzień tygodnia: \e[31m%s\e[0m\nGodzina rozpoczęcia [Czas trwania]: \e[31m%02d:%02d [%d]\e[0m\n\n", iterator->lesson.className, days[iterator->lesson.day], iterator->lesson.hour, iterator->lesson.minute, iterator->lesson.duration);
+            iterator=iterator->next;
+        }
+    }
+
+}
+bool If_lessons_are_the_same(Lesson lesson_1, Lesson lesson_2) {
+    if(lesson_1.day != lesson_2.day){
+        return false;
+    }
+    if(lesson_1.duration != lesson_2.duration) {
+        return false;
+    }
+    if(lesson_1.hour != lesson_2.hour){
+        return false;
+    }
+    if(lesson_1.minute != lesson_2.minute){
+        return false;
+    }
+    if(strcmp(lesson_1.className, lesson_2.className)){
+        return false;
+    }
+    return true;
+}
+void List_remove(struct Node **list, Lesson lesson){
+    if (list == NULL) {
+        fprintf(stderr, "List_remove - lista nie istnieje\n");
+    }else{
+        Node *iterator = *list;
+        if(If_lessons_are_the_same(lesson,iterator->lesson)){
+            *list=iterator->next;
+            free(iterator);
+        }
+        while(iterator->next) {
+            if(If_lessons_are_the_same(lesson,iterator->next->lesson)){
+                iterator=iterator->next->next;
+                // free(iterator->next->lesson.className);
+                free(iterator->next);
+                break;
+            }
+            iterator=iterator->next;
+        }
+    }
+}
+void List_destroy(struct Node **list){
+    if (list==NULL || *list == NULL) {
+        fprintf(stderr, "List_remove - lista nie istnieje\n");
+    }else{
+        Node *current_element = *list;
+        Node *next_element = current_element->next;
+        while(current_element) { 
+            free(current_element); 
+            current_element = next_element;
+            if(next_element!=NULL){
+                next_element=next_element->next; 
+            }
+        }
+        *list=NULL;
+    }
+}
+
 int main(void)
 {
-    enum Day
-    {
-        MON,
-        TUE,
-        WED,
-        THU,
-        FRI,
-        SAT,
-        SUN
-    };
+    Node *list = NULL;
+    Lesson lesson;
 
-    /**********************/
-    /* Struktura 'Lesson' */
-    /**********************/
-    struct Lesson
-    {
-        char *className;
-        enum Day day;
-        int hour;
-        int minute;
-        int duration;
-    };
+    lesson.className = "Podstawy Programowania";
+    lesson.day = WED;
+    lesson.hour = 12;
+    lesson.minute = 50;
+    lesson.duration = 90;
+    List_insert(&list, lesson, true);
 
-    /********************/
-    /* Struktura 'Node' */
-    /********************/
-    struct Node
-    {
-        struct Lesson lesson;
-        struct Node *next;
-    };
+    lesson.className = "Wychowanie fizyczne";
+    lesson.day = MON;
+    lesson.hour = 8;
+    lesson.minute = 00;
+    lesson.duration = 90;
+    List_insert(&list, lesson, true);
 
-    // Zmienna 'head' będzie przechowywać wskazanie na pierwszy element / węzeł listy
-    struct Node *head = NULL; // Na razie nie przechowuje niczego
+    List_print(&list); // Funkcja powinna wypisać:
+                       // Wychowanie fizyczne, Poniedziałek 8:00 [90]
+                       // Podstawy programowania, Środa 12:50 [90]
+    List_remove(&list, lesson);
+    printf("Po usunieciu \n\n");
+    List_print(&list); // Funkcja powinna wypisać:
+                       // Podstawy programowania, Środa 12:50 [90]
 
-    //  Utworzenie pierwszego węzła listy
-    struct Node *node1 = (struct Node *)malloc(sizeof(struct Node));
-    if (node1 != NULL) // Jeżeli udało się utworzyć węzeł, to wypełnij go danymi
-    {
-        // Określanie zawartości struktury 'Lesson'
-        node1->lesson.className = "Podstawy Programowania";
-        node1->lesson.day = WED;
-        node1->lesson.hour = 12;
-        node1->lesson.minute = 50;
-        node1->lesson.duration = 90;
+    List_destroy(&list); // Likwidacja listy
+    List_destroy(&list); // Wypisuje: "Lista nie istnieje"
 
-        // Określanie wskazania na następny węzeł listy
-        node1->next = NULL; // Wartość NULL oznacza, że dany węzeł nie ma następnika
-    }
-
-    /*
-    Po wykonaniu tych instrukcji zmienna 'node1' wskazuje na następującą strukturę danych:
-
-                                   Struktura 'Node'
-                   +--------------------------------------------------------+
-                   |                          Struktura 'Lesson             |
-                   |              +---------------------------------------+ |
-                   |              | className -> "Podstawy Programowania" | |
-                   |              | day:          WED                     | |
-                   | lesson :     | hour:         12                      | |
-                   |              | minute:       50                      | |
-                   |              | duration:     90                      | |
-                   |              +---------------------------------------+ |
-      node1 -----> +--------------------------------------------------------+
-                   | next:        NULL                                      |
-                   +--------------------------------------------------------+
-        */
-
-    //  Utworzenie drugiego węzła
-    struct Node *node2 = (struct Node *)malloc(sizeof(struct Node));
-    if (node2 != NULL)
-    {
-        node2->lesson.className = "Wychowanie fizyczne";
-        node2->lesson.day = MON;
-        node2->lesson.hour = 8;
-        node2->lesson.minute = 00;
-        node2->lesson.duration = 90;
-        node2->next = NULL;
-    }
-
-    //  Utworzenie trzeciego węzła
-    struct Node *node3 = (struct Node *)malloc(sizeof(struct Node));
-    if (node3 != NULL)
-    {
-        node3->lesson.className = "Konsultacje";
-        node3->lesson.day = THU;
-        node3->lesson.hour = 11;
-        node3->lesson.minute = 05;
-        node3->lesson.duration = 30;
-        node3->next = NULL;
-    }
-
-    // Wstawianie węzłów do listy — pierwszy sposób
-    if (node1 != NULL && node2 != NULL && node3 != NULL)
-    {
-        head = node1;
-        node1->next = node2;
-        node2->next = node3;
-
-        /*
-        Po wykonaniu tych instrukcji lista wygląda następująco:
-
-                         +--------+         +--------+         +------------+
-                         | lesson |         | lesson |         | lesson     |
-                   +-->  +--------+    +--> +--------+    +--> +------------+
-                   |     |        |    |    |        |    |    |            |
-          head ----+     | next   |----+    | next   |----+    | next: NULL |
-                         +--------+         +--------+         +------------+
-                             ^                  ^                     ^
-                             |                  |                     |
-                           node1              node2                  node3
-    */
-    }
-
-    // Wstawianie węzłów do listy — drugi sposób
-    if (node1 != NULL && node2 != NULL && node3 != NULL)
-    {
-        head = node1;
-        head->next = node2;
-        head->next->next = node3;
-    }
-
-    // Wstawianie węzłów do listy — trzeci sposób
-    struct Node *current;
-
-    if (node1 != NULL && node2 != NULL && node3 != NULL)
-    {
-        current = head = node1; // Ustawienie wskaźników (zmiennych) 'current' oraz 'head' na pierwszy węzęł listy
-        current->next = node2;  // Dopięcie drugiego elementu (węzła) do 'current', czyli de facto do pierwszego węzła listy
-
-        current = current->next; // Ustawienie zmiennej 'current' na drugi element listy
-        current->next = node3;   // Dopięcie trzeciego elementu do 'current', czyli do drugiego (węzła)
-
-        /*
-        Dopinanie, ewentualnych, kolejnych węzłów:
-
-        current = current->next; // Ustawienie zmiennej 'current' na trzeci element listy
-        current->next = node4;   // Dopięcie czwartego elementu do 'current', czyli do trzeciego
-
-        current = current->next; // Ustawienie zmiennej 'current' na czwart element listy
-        current->next = node5;   // Dopięcie piątego elementu do 'current', czyli do czwartego
-
-        ...
-        */
-    }
-
-    char *dayNames[] = {"Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota", "Niedziela"};
-
-    // Wypisanie informacji o wszystkich lekcjach zawartych na liście
-    for (current = head; current != NULL; current = current->next)
-    {
-        printf("Przedmiot: \e[31m%s\e[0m\nDzień tygodnia: \e[31m%s\e[0m\nGodzina rozpoczęcia [Czas trwania]: \e[31m%02d:%02d [%d]\e[0m\n\n", current->lesson.className, dayNames[current->lesson.day], current->lesson.hour, current->lesson.minute, current->lesson.duration);
-    }
-    // Nie można zapomnieć o zwalnianiu pamięci — każdemu wywołaniu 'malloc()' / 'calloc()', na samym końcu programu, powinno towarzyszyć wywołanie funkcji 'free()'
-    // Zwalniane  w kolejności od ostatniego do pierwszego elementu listy
-    free(head->next->next); // Zwolnienie pamięci dla trzeciego elementu
-    free(head->next);       // Zwolnienie pamięci dla drugiego elementu
-    free(head);             // Zwolnienie pamięci dla pierwszego elementu
-
-    // Zwalniane pamięci w kolejności od pierwszego do ostatniego elementu listy
-    /*
-    current = head;    // Ustawienie zmiennej 'current' na pierwszy element listy
-    head = head->next; // Ustawienie zmiennej 'head' na drugi element listy
-    free(current);     // Zwolnienie pamięci dla pierwszego elementu
-
-    current = head;    // Ustawienie zmiennej 'current' na drugi element listy
-    head = head->next; // Ustawienie zmiennej 'head' na trzeci element listy
-    free(current);     // Zwolnienie pamięci dla drugiego elementu
-
-    free(head); // Zwolnienie pamięci dla trzeciego elementu
-    */
+    return 0;
 }
