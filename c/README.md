@@ -1,1 +1,1 @@
-#### 🕹️ Basics of the C language
+#### 🕹️ Basics of C language
