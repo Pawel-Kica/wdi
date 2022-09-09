@@ -12,4 +12,4 @@ Second semester:
 
 - 🕸️ [Security of networks and ICT systems](https://github.com/DevKica/wdi/tree/main/snis)
 
-- 🕹️ [Basics of the C language](https://github.com/DevKica/wdi/tree/main/c)
+- 🕹️ [Basics of C language](https://github.com/DevKica/wdi/tree/main/c)
