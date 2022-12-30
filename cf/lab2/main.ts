@@ -2,7 +2,6 @@ import ExifParser from 'exif-parser';
 import {promises as fs} from 'fs';
 
 (async () => {
-    const imgbuffer = await fs.readFile(process.argv[2]);
     const parser = ExifParser.create(imgbuffer);
     parser.enableBinaryFields(true);
     parser.enableTagNames(true);

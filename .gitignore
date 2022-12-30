@@ -7,3 +7,6 @@ index
 gen
 *.zip
 /node_modules
+*.dat
+*.JPG
+*.gz
